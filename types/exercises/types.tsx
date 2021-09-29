@@ -1,1 +1,1 @@
-export type guessByPictureType = { img: string, variants: string[], right: string, }[]
+export type guessByPictureType = { img: string, variant:string, right: string, }[]

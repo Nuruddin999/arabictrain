@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import GuessByPicture from '../../../components/exercises/guess_by_picture';
 import Button from '@material-ui/core/Button';
-import { prepareQuiz } from '../../../services/picture_quiz_service';
+import { prepareExercises} from '../../../services/picture_quiz_service';
 import axios from 'axios';
 const VklasseTasks = ({ pictureQuiz }) => {
     const [state, setState] = useState({
-        pictureQuiz: [{ img: "", variants: [], right: "" }],
+        pictures: [],
         turnOnCkeck: false
     })
     const handleCheck = () => {
@@ -16,11 +16,11 @@ const VklasseTasks = ({ pictureQuiz }) => {
         setState(state => ({ ...state, pictureQuiz: response.data }))
     }
     useEffect(() => {
-        setState(state => ({ ...state, pictureQuiz }))
+        setState(state => ({ ...state, pictures:pictureQuiz }))
     }, [])
     return (
         <div>
-            <GuessByPicture pictures={state.pictureQuiz} runCheck={state.turnOnCkeck} />
+            <GuessByPicture pictures={state.pictures} runCheck={state.turnOnCkeck} />
             <Button onClick={handleCheck}>Проверить</Button>
             <Button onClick={refresh}>Заново</Button>
         </div>
@@ -29,7 +29,7 @@ const VklasseTasks = ({ pictureQuiz }) => {
 
 export default VklasseTasks
 export async function getServerSideProps({ req }: any) {
-    let forPicQuizData = prepareQuiz(req)
+    let forPicQuizData = prepareExercises(req)
     return {
         props: {
             pictureQuiz: forPicQuizData,
